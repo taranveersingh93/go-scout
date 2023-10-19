@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 		<link rel="stylesheet" href="/css/site.css" />
 	</head>
-	<body>
+	<body onload="buildDropDown()">
 		<!-- bscf-navbar-base -->
 		<nav class="navbar navbar-expand-lg navbar-dark">
 			<div class="container-fluid">
@@ -62,16 +62,109 @@
 		</nav>
 
 		<main class="container py-3">
-			<h1>App UI GOES HERE</h1>
-			<input
-				class="form-control my-3"
-				placeholder="Enter a message"
-				type="text"
-				style="width: 12rem"
-				id="message"
-				name="message"
-			/>
-			<button class="btn btn-primary" id="btnSubmit" type="submit">Display Message</button>
+			<div class="row row-cols-1 row-cols-md-2">
+				<div class="col order-md-last p-3">
+					<img class="img-fluid" src="/img/goScout.svg" />
+				</div>
+				<div class="col">
+					<div class="card shadow">
+						<div class="card-body">
+							<div class="dropdown">
+								<button
+									class="btn btn-primary dropdown-toggle"
+									type="button"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
+									id="dropdownButton"
+								>
+									Pick a Location
+								</button>
+								<ul class="dropdown-menu dropdown-menu-dark" id="cityDropdown"></ul>
+							</div>
+							<table class="table table-striped mt-2 border">
+								<thead class="table-green">
+									<tr>
+										<th colspan="2">Stats for <span id="statsLocation">All</span> Events</th>
+									</tr>
+								</thead>
+								<tbody class="">
+									<tr>
+										<td>Total Attendance</td>
+										<td id="totalAttendance">1,000</td>
+									</tr>
+									<tr>
+										<td>Average Attendance</td>
+										<td id="averageAttendance">1,000</td>
+									</tr>
+									<tr>
+										<td>Most Attendance</td>
+										<td id="mostAttendance">1,000</td>
+									</tr>
+									<tr>
+										<td>Least Attendance</td>
+										<td id="leastAttendance">1,000</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card mt-3">
+				<div class="card-body">
+					<button class="btn btn-primary" id="newEventBtn">Add Event</button>
+					<div class="table-responsive">
+						<table class="table table-striped border mt-3">
+							<thead class="table-green">
+								<tr>
+									<th>Event Name</th>
+									<th>City</th>
+									<th>State</th>
+									<th>Attendance</th>
+									<th>Date</th>
+								</tr>
+							</thead>
+							<tbody id="eventsTable">
+								<tr>
+									<td>Comic Con</td>
+									<td>New York</td>
+									<td>New York</td>
+									<td>240,000</td>
+									<td>6/1/2021</td>
+								</tr>
+								<tr>
+									<td>Comic Con</td>
+									<td>New York</td>
+									<td>New York</td>
+									<td>240,000</td>
+									<td>6/1/2021</td>
+								</tr>
+								<tr>
+									<td>Comic Con</td>
+									<td>New York</td>
+									<td>New York</td>
+									<td>240,000</td>
+									<td>6/1/2021</td>
+								</tr>
+								<tr>
+									<td>Comic Con</td>
+									<td>New York</td>
+									<td>New York</td>
+									<td>240,000</td>
+									<td>6/1/2021</td>
+								</tr>
+								<tr>
+									<td>Comic Con</td>
+									<td>New York</td>
+									<td>New York</td>
+									<td>240,000</td>
+									<td>6/1/2021</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</main>
 
 		<footer class="py-3 container-fluid">
@@ -92,6 +185,10 @@
 			</div>
 		</footer>
 
+		<template id="dropdownItemTemplate">
+			<li><a class="dropdown-item" href="#"></a></li>
+		</template>
+
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -100,9 +197,5 @@
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 		<script src="/js/site.js"></script>
-		<script>
-			const button = document.getElementById("btnSubmit");
-			button.addEventListener("click", displayMessage);
-		</script>
 	</body>
 </html>

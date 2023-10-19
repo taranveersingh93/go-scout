@@ -5,8 +5,8 @@
     --ts-dark-color: #1b1b1b;
     --ts-primary-color: hsl(210, 17%, 18%);
     --ts-secondary-color: hsl(210, 17%, 95%);
-    --ts-tertiary-color: hsl(120, 100%, 15%);
-    --ts-accent-color: hsl(120, 100%, 25%);
+    --ts-tertiary-color: #7c898b;
+    --ts-accent-color: #253439;
 }
 
 html,
@@ -84,8 +84,17 @@ pre[class*="language-"] {
     --bs-btn-disabled-border-color: var(--ts-primary-color);
 }
 
+.dropdown-item.active, .dropdown-item:active {
+    background-color: var(--ts-tertiary-color);
+}
+
 .navbar-nav {
     --bs-nav-link-hover-color: white;
+}
+
+.table-green {
+    --bs-table-bg: var(--ts-accent-color);
+    --bs-table-color: var(--ts-light-color)
 }
 
 @media (min-width: 576px) { 
