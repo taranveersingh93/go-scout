@@ -81,4 +81,31 @@ const buildDropDown = () => {
         dropdownItem.querySelector('a').innerText = cityName;
         cityDropdown.appendChild(dropdownItem);
     }
-}    
+    displayEvents(currentEvents)
+}
+
+const displayEvents = (events) => {
+    const eventsTable = document.getElementById('eventsTable');
+    eventsTable.innerHTML = '';
+
+    for (let i = 0; i < events.length; i++) {
+        const event = events[i];
+        const eventRow = document.createElement('tr');
+        const eventName = document.createElement('td');
+        const eventCity = document.createElement('td');
+        const eventState = document.createElement('td');
+        const eventAttendance = document.createElement('td');
+        const eventDate = document.createElement('td');
+        eventName.innerText = event.event;
+        eventCity.innerText = event.city;
+        eventState.innerText = event.state;
+        eventAttendance.innerText = event.attendance;
+        eventDate.innerText = event.date;
+        eventRow.appendChild(eventName);
+        eventRow.appendChild(eventCity);
+        eventRow.appendChild(eventState);
+        eventRow.appendChild(eventAttendance);
+        eventRow.appendChild(eventDate);
+        eventsTable.appendChild(eventRow);
+    }
+}
