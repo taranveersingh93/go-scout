@@ -101,8 +101,9 @@ const displayEvents = (events) => {
         eventName.innerText = event.event;
         eventCity.innerText = event.city;
         eventState.innerText = event.state;
-        eventAttendance.innerText = event.attendance;
-        eventDate.innerText = event.date;
+        eventAttendance.innerText = event.attendance.toLocaleString();
+        const dateObj = new Date(event.date);
+        eventDate.innerText = dateObj.toLocaleDateString('en-US', {dateStyle: 'medium'});
         eventRow.appendChild(eventName);
         eventRow.appendChild(eventCity);
         eventRow.appendChild(eventState);
@@ -138,8 +139,6 @@ const calculateStats = events => {
     return stats;
 }
 
-
-
 const displayStats = values => {
     const totalAttendanceElement = document.getElementById('totalAttendance');
     totalAttendanceElement.innerText = values.sum.toLocaleString();
@@ -149,4 +148,22 @@ const displayStats = values => {
     minAttendanceElement.innerText = values.min.toLocaleString();
     const maxAttendanceElement = document.getElementById('mostAttendance');
     maxAttendanceElement.innerText = values.max.toLocaleString();
+}
+
+const filterByCity = clickedOption => {
+    const city = clickedOption.innerText;
+    const allEvents = getEvents();
+    const statsTextCity = document.getElementById('statsLocation');
+    const dropDownBtn = document.getElementById('dropdownButton');
+    statsTextCity.innerText = city;
+    let filteredEvents = [];
+    if (city === "All") {
+        filteredEvents = allEvents;
+        dropDownBtn.innerText = 'Pick a Location';
+    } else {
+        dropDownBtn.innerText = city;
+        filteredEvents = allEvents.filter(event => event.city === city);
+    }
+    displayStats(calculateStats(filteredEvents));
+    displayEvents(filteredEvents);
 }
