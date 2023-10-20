@@ -65,7 +65,44 @@ const events = [
 ];
 
 const getEvents = () => {
-    return events;
+    const eventsJson = localStorage.getItem("goScoutEvents");
+    let storedEvents = events;
+    if (!eventsJson) {
+        saveEvents(events);
+    } else {
+        storedEvents = JSON.parse(eventsJson);
+    }
+    return storedEvents;
+}
+
+const saveEvents = events => {
+    const eventsJson = JSON.stringify(events);
+    localStorage.setItem("goScoutEvents", eventsJson);
+}
+
+const saveNewEvent = event => {
+    const newEventForm = document.getElementById('EventForm');
+    const formData = new FormData(newEventForm);
+    const newEvent = Object.fromEntries(formData.entries());
+    newEvent.attendance = parseInt(newEvent.attendance);
+    newEvent.date = new Date(newEvent.date).toLocaleDateString();
+    const allEvents = getEvents();
+    allEvents.push(newEvent);
+    saveEvents(allEvents);
+    clearForm(newEventForm);
+    closeModal();
+    buildDropDown();
+    filterByCity("All");
+}
+
+const closeModal = () => {
+    const modalElement = document.getElementById('formModal');
+    const bsModal = bootstrap.Modal.getInstance(modalElement);
+    bsModal.hide();
+}
+
+const clearForm = (form) => {
+    form.reset();
 }
 
 const buildDropDown = () => {
@@ -75,6 +112,7 @@ const buildDropDown = () => {
     const dropDownChoices = ['All', ...uniqueCities];
     const dropdownTemplate = document.querySelector('#dropdownItemTemplate');
     const cityDropdown = document.querySelector('#cityDropdown');
+    cityDropdown.innerHTML = '';
     for (let i = 0; i < dropDownChoices.length; i++) {
         const dropdownItem = dropdownTemplate.content.cloneNode(true);
         const cityName = dropDownChoices[i];
@@ -150,8 +188,7 @@ const displayStats = values => {
     maxAttendanceElement.innerText = values.max.toLocaleString();
 }
 
-const filterByCity = clickedOption => {
-    const city = clickedOption.innerText;
+const filterByCity = city => {
     const allEvents = getEvents();
     const statsTextCity = document.getElementById('statsLocation');
     const dropDownBtn = document.getElementById('dropdownButton');
