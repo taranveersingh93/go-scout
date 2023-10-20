@@ -81,7 +81,9 @@ const buildDropDown = () => {
         dropdownItem.querySelector('a').innerText = cityName;
         cityDropdown.appendChild(dropdownItem);
     }
-    displayEvents(currentEvents)
+    displayEvents(currentEvents);
+    const stats = calculateStats(currentEvents)
+    displayStats(stats);
 }
 
 const displayEvents = (events) => {
@@ -108,4 +110,43 @@ const displayEvents = (events) => {
         eventRow.appendChild(eventDate);
         eventsTable.appendChild(eventRow);
     }
+}
+
+const calculateStats = events => {
+    let sum = 0;
+    let min = Infinity;
+    let max = -Infinity;
+    for (let i = 0; i < events.length; i++) {
+        const attendance = events[i].attendance;
+        sum += attendance;
+        if (min > attendance) {
+            min = attendance
+        }
+
+        if (max < attendance) {
+            max = attendance;
+        }
+    }
+    let average = Math.floor(sum/events.length);
+    
+    const stats = {
+        sum,
+        average,
+        min,
+        max
+    }
+    return stats;
+}
+
+
+
+const displayStats = values => {
+    const totalAttendanceElement = document.getElementById('totalAttendance');
+    totalAttendanceElement.innerText = values.sum.toLocaleString();
+    const avgAttendanceElement = document.getElementById('averageAttendance');
+    avgAttendanceElement.innerText = values.average.toLocaleString();
+    const minAttendanceElement = document.getElementById('leastAttendance');
+    minAttendanceElement.innerText = values.min.toLocaleString();
+    const maxAttendanceElement = document.getElementById('mostAttendance');
+    maxAttendanceElement.innerText = values.max.toLocaleString();
 }
