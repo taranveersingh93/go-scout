@@ -321,7 +321,85 @@ const filterEventsByCity = city => {
 							storage, refresh page data and display a form submission confirmation.
 						</li>
 					</ul>
-					<p class="display-6 text-center"></p>
+					<p class="display-6 text-center">Starter Kit</p>
+					<p>
+						Before talking about the entry function, I'd like to talk through the helper functions because of the
+						integral part they play:
+					</p>
+					<ul>
+						<li>
+							<strong>getEvents()</strong>: (line 67) It checks for the <code>goScoutEvents</code> item in the local
+							storage. If it doesn't find one, it saves and returns the hardcoded events array. This saving is helpful
+							for the next session. If it does find one, it parses the JSON to an array and returns the same.
+						</li>
+						<li>
+							<strong>createDropDown(choices)</strong>: (line 131) This function, clears the city-dropdown html first.
+							It then loops through the <code>choices</code> array of city names and generates <code>li</code> template
+							clone for each choice. It appends these <code>li</code> elements to the parent element.
+						</li>
+						<li>
+							<strong>displayEvents(events)</strong>: (line 143) This function clears the html of the events table. It
+							loops through the events. For each event, it generates a <code>&lttr&gt</code> tag. It also generates
+							<code>&lttd&gt</code> tags depicting each important data point. The function first populates these
+							<code>&lttd&gt</code> tags with relevant properties of the event and then appends the
+							<code>&lttd&gt</code> tags to the table row. But up until now, the row representing the event only exists
+							in javascript. We finally append the row (which has the <code>&lttd&gt</code> tags) to the table element
+							for the row to actually get displayed.
+						</li>
+						<li>
+							<strong>calculateStats(events)</strong>: (line 170) This function initializes sum, min, max values for
+							event attendances and loops through the events array to update those values after each iteration. Once
+							it's calculated the <code>sum</code>, it also calculates the <code>average</code>. Finally, it returns the
+							four values in an object.
+						</li>
+						<li>
+							<strong>displayStats(events)</strong>: (line 196) This function get the <code>&lttd&gt</code> elements
+							representing stats and displays the sum, min, max and avg from the <code>values</code> object it uses as a
+							parameter.
+						</li>
+					</ul>
+					<p class="display-6 text-center">Page Load</p>
+					<p>
+						The entry function of the app is <code>createTableData()</code> which is triggered by window load and
+						orchestrates the invocations of the functions above. This function dynamically creates all the data the page
+						needs on load - including the events table, the dropdown menu and the stats table.
+					</p>
+					<p class="display-6 text-center">Choosing a city from the dropdown</p>
+					<p>
+						The dropdown of city options are created with a <code>template</code> tag. Each template tag consists of an
+						event listener which calls the function <code>filterEventsByCity</code> with the argument of
+						<code>this.innerText</code>. The <code>this.innerText</code> here would always represent the clicked
+						option's text and the function can take it up from there.
+					</p>
+					<p>
+						The function uses a parameter of <code>city</code> representing the city name. It replaces the text in the
+						dropdown button. If the option selected is <code>All</code>, the function refreshes the page data
+						referencing <code>allEvents</code>. If the option selected is a city, the function filters the array and
+						refreshes the page data referencing just the events from the selected city.
+					</p>
+
+					<p class="display-6 text-center">Saving a New Event</p>
+					<p>
+						When a user submits the form for saving a new event, it triggers the function
+						<code>saveNewEvent()</code> (line 83).
+					</p>
+					<p>This function gets the form entry values and assign them to the <code>newEvent</code> variable.</p>
+					<ul>
+						<li>
+							It stores the latest version of events in the <code>allEvents</code> variable and pushes the
+							<code>newElement</code> in the <code>allEvents</code> array.
+						</li>
+						<li>It saves this array to local storage.</li>
+						<li>It clears the form and closes the modal by calling some helper functions.</li>
+						<li>
+							It then invokes the entry function <code>createTableData</code> again to create the page's initial data.
+						</li>
+						<li>
+							Because the page displays "all" events by default, the function calls the
+							<code>filterEventsByCity</code> function to retain the view the user was on.
+						</li>
+						<li>Finally, the function displays a success alert message confirming the event being saved.</li>
+					</ul>
 				</div>
 			</div>
 		</main>
