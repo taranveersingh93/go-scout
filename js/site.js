@@ -97,11 +97,11 @@ const saveNewEvent = () => {
     showConfirmation(newEvent.event);
 }
 
-const showConfirmation = (event) => {
+const showConfirmation = (eventName) => {
     Swal.fire({
         backdrop: false,
         title: 'Success!',
-        text: `The ${event} event was saved!`,
+        text: `The ${eventName} event was saved!`,
         icon: 'success',
         confirmButtonColor: '#253439'
     })
