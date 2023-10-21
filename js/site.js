@@ -68,19 +68,19 @@ const getEvents = () => {
     const eventsJson = localStorage.getItem("goScoutEvents");
     let storedEvents = events;
     if (!eventsJson) {
-        saveEvents(events);
+        saveEventsToLocalStorage(events);
     } else {
         storedEvents = JSON.parse(eventsJson);
     }
     return storedEvents;
 }
 
-const saveEvents = events => {
+const saveEventsToLocalStorage = events => {
     const eventsJson = JSON.stringify(events);
     localStorage.setItem("goScoutEvents", eventsJson);
 }
 
-const saveNewEvent = event => {
+const saveNewEvent = () => {
     const newEventForm = document.getElementById('EventForm');
     const formData = new FormData(newEventForm);
     const newEvent = Object.fromEntries(formData.entries());
@@ -88,11 +88,23 @@ const saveNewEvent = event => {
     newEvent.date = new Date(newEvent.date).toLocaleDateString();
     const allEvents = getEvents();
     allEvents.push(newEvent);
-    saveEvents(allEvents);
+    saveEventsToLocalStorage(allEvents);
     clearForm(newEventForm);
     closeModal();
-    buildDropDown();
-    filterByCity("All");
+    createTableData();
+    const selectedDropdownOption = document.getElementById('statsLocation');
+    filterByCity(selectedDropdownOption.innerText);
+    showConfirmation(newEvent.event);
+}
+
+const showConfirmation = (event) => {
+    Swal.fire({
+        backdrop: false,
+        title: 'Success!',
+        text: `The ${event} event was saved!`,
+        icon: 'success',
+        confirmButtonColor: '#253439'
+    })
 }
 
 const closeModal = () => {
@@ -105,23 +117,27 @@ const clearForm = (form) => {
     form.reset();
 }
 
-const buildDropDown = () => {
+const createTableData = () => {
     const currentEvents = getEvents();
     const cityNames = currentEvents.map(event => event.city);
     const uniqueCities = new Set(cityNames);
     const dropDownChoices = ['All', ...uniqueCities];
-    const dropdownTemplate = document.querySelector('#dropdownItemTemplate');
-    const cityDropdown = document.querySelector('#cityDropdown');
-    cityDropdown.innerHTML = '';
-    for (let i = 0; i < dropDownChoices.length; i++) {
-        const dropdownItem = dropdownTemplate.content.cloneNode(true);
-        const cityName = dropDownChoices[i];
-        dropdownItem.querySelector('a').innerText = cityName;
-        cityDropdown.appendChild(dropdownItem);
-    }
+    createDropdown(dropDownChoices);
     displayEvents(currentEvents);
     const stats = calculateStats(currentEvents)
     displayStats(stats);
+}
+
+const createDropdown = (choices) => {
+    const dropdownTemplate = document.querySelector('#dropdownItemTemplate');
+    const cityDropdown = document.querySelector('#cityDropdown');
+    cityDropdown.innerHTML = '';
+    for (let i = 0; i < choices.length; i++) {
+        const dropdownItem = dropdownTemplate.content.cloneNode(true);
+        const cityName = choices[i];
+        dropdownItem.querySelector('a').innerText = cityName;
+        cityDropdown.appendChild(dropdownItem);
+    }
 }
 
 const displayEvents = (events) => {
