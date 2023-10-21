@@ -162,8 +162,20 @@ const saveNewEvent = () => {
 	saveEventsToLocalStorage(allEvents);
 	clearForm(newEventForm);
 	closeModal();
-	buildDropDown();
-	filterByCity("All");
+	createTableData();
+	const selectedDropdownOption = document.getElementById('statsLocation');
+	filterEventsByCity(selectedDropdownOption.innerText);
+	showConfirmation(newEvent.event);
+}
+
+const showConfirmation = (eventName) => {
+	Swal.fire({
+		backdrop: false,
+		title: 'Success!',
+		text: `The ${eventName} event was saved!`,
+		icon: 'success',
+		confirmButtonColor: '#253439'
+	})
 }
 
 const closeModal = () => {
@@ -263,7 +275,7 @@ const displayStats = values => {
 	maxAttendanceElement.innerText = values.max.toLocaleString();
 }
 
-const filterByCity = city => {
+const filterEventsByCity = city => {
 	const allEvents = getEvents();
 	const statsTextCity = document.getElementById('statsLocation');
 	const dropDownBtn = document.getElementById('dropdownButton');
@@ -283,8 +295,33 @@ const filterByCity = city => {
 					</pre>
 				</div>
 				<div class="col-12 col-lg-4">
-					<p>The code is structured in one function <code>displayMessage</code>.</p>
-					<p><code>displayMessage</code> displayes a sweetAlert when the button is pressed.</p>
+					<p class="display-6 text-center">Abstract</p>
+					<p>Here's a chronological high level breakdown of the steps:</p>
+					<ul>
+						<li>Upon window-load, check if the events we care about exist in the browser's local storage.</li>
+						<li>
+							If the local storage events exist, use those. Otherwise, save and use a hardcoded events array(line 1).
+						</li>
+						<li>
+							Extract unique cities from these events and create a dropdown menu allowing users to select one of the
+							cities.
+						</li>
+						<li>Using the events array, generate a table displaying all the events in the user-selected city.</li>
+						<li>Calculate some stats from the events of interest and display those in a stats table as well.</li>
+						<li>
+							If a user chooses a different city in the dropdown, the events table and the data table should reflect
+							updated data.
+						</li>
+						<li>
+							If a user clicks on the <code>Add Event</code> button, display a form in a modal where they can enter a
+							new event.
+						</li>
+						<li>
+							Upon form submission, clear the form, close the modal, update the events data, save that data to local
+							storage, refresh page data and display a form submission confirmation.
+						</li>
+					</ul>
+					<p class="display-6 text-center"></p>
 				</div>
 			</div>
 		</main>

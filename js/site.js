@@ -93,7 +93,7 @@ const saveNewEvent = () => {
     closeModal();
     createTableData();
     const selectedDropdownOption = document.getElementById('statsLocation');
-    filterByCity(selectedDropdownOption.innerText);
+    filterEventsByCity(selectedDropdownOption.innerText);
     showConfirmation(newEvent.event);
 }
 
@@ -204,7 +204,7 @@ const displayStats = values => {
     maxAttendanceElement.innerText = values.max.toLocaleString();
 }
 
-const filterByCity = city => {
+const filterEventsByCity = city => {
     const allEvents = getEvents();
     const statsTextCity = document.getElementById('statsLocation');
     const dropDownBtn = document.getElementById('dropdownButton');
