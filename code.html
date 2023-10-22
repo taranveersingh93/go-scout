@@ -353,7 +353,7 @@ const filterEventsByCity = city => {
 							four values in an object.
 						</li>
 						<li>
-							<strong>displayStats(events)</strong>: (line 196) This function get the <code>&lttd&gt</code> elements
+							<strong>displayStats(events)</strong>: (line 196) This function gets the <code>&lttd&gt</code> elements
 							representing stats and displays the sum, min, max and avg from the <code>values</code> object it uses as a
 							parameter.
 						</li>
@@ -372,10 +372,10 @@ const filterEventsByCity = city => {
 						option's text and the function can take it up from there.
 					</p>
 					<p>
-						The function uses a parameter of <code>city</code> representing the city name. It replaces the text in the
-						dropdown button. If the option selected is <code>All</code>, the function refreshes the page data
-						referencing <code>allEvents</code>. If the option selected is a city, the function filters the array and
-						refreshes the page data referencing just the events from the selected city.
+						The function <code>filterEventsByCity</code> uses a parameter of <code>city</code> representing the city
+						name. It replaces the text in the dropdown button. If the option selected is <code>All</code>, the function
+						refreshes the page data referencing <code>allEvents</code>. If the option selected is a city, the function
+						filters the array and refreshes the page data referencing just the events from the selected city.
 					</p>
 
 					<p class="display-6 text-center">Saving a New Event</p>
@@ -383,7 +383,7 @@ const filterEventsByCity = city => {
 						When a user submits the form for saving a new event, it triggers the function
 						<code>saveNewEvent()</code> (line 83).
 					</p>
-					<p>This function gets the form entry values and assign them to the <code>newEvent</code> variable.</p>
+					<p>This function gets the form entry values and assigns them to the <code>newEvent</code> variable.</p>
 					<ul>
 						<li>
 							It stores the latest version of events in the <code>allEvents</code> variable and pushes the
